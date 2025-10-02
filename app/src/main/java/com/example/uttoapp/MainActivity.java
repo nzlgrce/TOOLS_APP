@@ -86,12 +86,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        ImageButton alarmBtn = findViewById(R.id.imageButtonAlarm);
-//        alarmBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
-//            startActivity(intent);
-//        });
-//
+        ImageButton alarmBtn = findViewById(R.id.imageButtonAlarm);
+        alarmBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
+            startActivity(intent);
+        });
 
     }
 }
