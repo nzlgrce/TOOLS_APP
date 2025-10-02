@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RecorderActivity">
+
+    <TextView
+        android:id="@+id/textViewRecorder"
+        android:layout_width="208dp"
+        android:layout_height="36dp"
+        android:text="@string/recorder"
+        android:textAlignment="center"
+        android:textColor="#333D79"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <TextView
+        android:layout_width="157dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="114dp"
+        android:text="@string/saved_recordings"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.138" />
+
+    <ListView
+        android:id="@+id/listViewRecordings"
+        android:layout_width="357dp"
+        android:layout_height="363dp"
+        android:layout_weight="1"
+        android:divider="?android:attr/listDivider"
+        android:dividerHeight="1dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.355" />
+
+    <ImageButton
+        android:id="@+id/btnRecorder"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_border"
+        android:padding="15dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.847"
+        app:srcCompat="@android:drawable/presence_audio_busy" />
+
+    <ImageButton
+        android:id="@+id/imageRecorderBack"
+        android:layout_width="101dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Recorder Back"
+        android:padding="1dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/arrow_back_icon" />
+
+    <ImageButton
+        android:id="@+id/imageButtonHelp"
+        android:layout_width="45dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="348dp"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Recorder Help"
+        android:padding="13dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.063"
+        app:srcCompat="@android:drawable/ic_menu_help"
+        app:tint="@color/black" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

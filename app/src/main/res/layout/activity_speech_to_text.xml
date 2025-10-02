@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAEBEF">
+
+    <!-- Speech to Text Button -->
+
+    <TextView
+        android:layout_width="189dp"
+        android:layout_height="45dp"
+        android:text="Speech to Text"
+        android:textAlignment="center"
+        android:textColor="#333D79"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.052" />
+
+    <!-- Recognized Speech Output -->
+
+    <ImageButton
+        android:id="@+id/btnButtonSpeechtoText"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Speech to Text"
+        android:padding="8dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/speech_to_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.214" />
+
+    <TextView
+        android:id="@+id/textViewSpeechText"
+        android:layout_width="338dp"
+        android:layout_height="429dp"
+        android:layout_marginTop="12dp"
+        android:padding="8dp"
+        android:text="Your speech will appear here"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnButtonSpeechtoText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

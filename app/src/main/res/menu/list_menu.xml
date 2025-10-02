@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/arrow_back_icon"
+        android:id="@+id/action_back"
+        android:background="@android:color/transparent"
+        android:title="Back" />
+
+
+    <item
+        android:icon="@drawable/settings_bar"
+        android:id="@+id/action_settings"
+        android:background="@android:color/transparent"
+        android:title="Settings" />
+        />
+
+</menu>

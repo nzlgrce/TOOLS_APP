@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">TOOLS</string>
+    <string name="utto_description">Smart Tools App</string>
+    <string name="settings">Settings</string>
+    <string name="enable_flashlight_auto_on">Enable Flashlight Auto-On</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="enable_bluetooth">Enable Bluetooth</string>
+    <string name="tools_list">Tools Options</string>
+    <string name="bluetooth">bluetooth</string>
+    <string name="name_bt_option">Bluetooth</string>
+    <string name="bt">Bluetooth</string>
+    <string name="bt_on_off">Bluetooth On/Off</string>
+    <string name="paired_dev">Paired Devices</string>
+    <string name="available_devices">Available Devices</string>
+    <string name="send_file">Send File</string>
+    <string name="receive_file">Receive File</string>
+    <string name="device_name">Device Name</string>
+    <string name="photo_preview">Photo preview</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="flashlight">Flashlight</string>
+    <string name="device_name_view">Device Name</string>
+    <string name="search">search</string>
+    <string name="back_button">Back Button</string>
+    <string name="send_a_file">Send File</string>
+    <string name="recorder">Recorder</string>
+    <string name="saved_recordings">Saved Recordings:</string>
+</resources>
