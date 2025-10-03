@@ -93,6 +93,9 @@
 
         <receiver android:name=".AlarmReceiver" />
 
+        <activity android:name=".CalculatorActivity"
+            android:exported="true" />
+
     </application>
 
 </manifest>

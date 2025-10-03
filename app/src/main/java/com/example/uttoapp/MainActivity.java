@@ -92,5 +92,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        ImageButton hotspotBtn = findViewById(R.id.imageButtonCalculator);
+        hotspotBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CalculatorActivity.class);
+            startActivity(intent);
+        });
     }
 }
