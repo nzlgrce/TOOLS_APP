@@ -10,8 +10,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,23 +24,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Use BottomNavigationView
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
-
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.action_back) {
-                // Proper back handling
-                getOnBackPressedDispatcher().onBackPressed();
-                return true;
-
-            }  else if (id == R.id.action_settings) {
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
-            }
-            return false;
-        });
 
         ImageButton bluetoothBtn = findViewById(R.id.imageButtonBluetooth);
         bluetoothBtn.setOnClickListener(v -> {

@@ -3,47 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
+    android:background="#C3BEC0"
     android:layout_height="match_parent">
 
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="178dp"
-        android:layout_height="35dp"
-        android:text="Camera"
+        android:layout_width="173dp"
+        android:layout_height="36dp"
+        android:text="@string/my_camera"
         android:textAlignment="center"
-        android:textSize="25sp"
-        android:textStyle="bold"
         android:textColor="#333D79"
+        android:textSize="26sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.067" />
 
     <ImageView
         android:id="@+id/photoView"
-        android:layout_width="304dp"
-        android:layout_height="311dp"
-        android:background="#333d"
+        android:layout_width="314dp"
+        android:layout_height="351dp"
+        android:background="@color/white"
         android:contentDescription="@string/photo_preview"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.314" />
+        app:layout_constraintVertical_bias="0.342" />
 
     <Button
         android:id="@+id/captureButton"
         android:layout_width="289dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="112dp"
-        android:background="#333D79"
+        android:layout_marginBottom="124dp"
+        android:background="@drawable/rounded_border"
         android:text="@string/take_photo"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:backgroundTint="#003332"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -53,7 +56,7 @@
         android:layout_width="75dp"
         android:layout_height="71dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Share"
+        android:contentDescription="@string/share"
         android:padding="18dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,52 +64,56 @@
         app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.706"
-        app:srcCompat="@android:drawable/ic_menu_share" />
+        app:layout_constraintVertical_bias="0.728"
+        app:srcCompat="@android:drawable/ic_menu_share"
+        app:tint="@color/black" />
+
 
     <ImageButton
         android:id="@+id/imageButtonDelete"
         android:layout_width="75dp"
         android:layout_height="71dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Delete"
+        android:contentDescription="@string/delete"
         android:padding="18dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.645"
+        app:layout_constraintHorizontal_bias="0.633"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.706"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
+        app:layout_constraintVertical_bias="0.728"
+        app:srcCompat="@android:drawable/ic_menu_delete"
+        app:tint="@color/black" />
 
     <ImageButton
-        android:id="@+id/imageCameraBack"
-        android:layout_width="53dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="25dp"
+        android:id="@+id/imageButtonBack"
+        android:layout_width="47dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="59dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Camera Back"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/back_button"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintEnd_toStartOf="@+id/textView6"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.041"
-        app:srcCompat="@drawable/arrow_back_icon" />
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/textViewPhotos"
         android:layout_width="105dp"
         android:layout_height="22dp"
-        android:text="View Photos"
+        android:text="@string/view_photo"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintVertical_bias="0.133" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

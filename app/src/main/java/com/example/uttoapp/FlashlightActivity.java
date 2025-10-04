@@ -8,23 +8,19 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.widget.TextView;
-import android.widget.ToggleButton;
+import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.appcompat.widget.SwitchCompat;
 
 public class FlashlightActivity extends AppCompatActivity {
 
-    private ToggleButton toggleBack, toggleFront, toggleBoth;
-    private TextView textBack, textFront, textBoth;
+    private SwitchCompat switchBack, switchFront, switchBoth;
     private CameraManager cameraManager;
-    private String backCameraId;
-    private String frontCameraId;
+    private String backCameraId, frontCameraId;
     private boolean hasFlash;
 
     @Override
@@ -32,24 +28,22 @@ public class FlashlightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.flashlight_activity);
 
-        toggleBack = findViewById(R.id.toggleButtonBackFlashlight);
-        toggleFront = findViewById(R.id.toggleButtonFrontFlashlight);
-        toggleBoth = findViewById(R.id.toggleButtonBothFlashlight);
+        // Link SwitchCompat views
+        switchBack = findViewById(R.id.switchBackFlashlight);
+        switchFront = findViewById(R.id.switchFrontFlashlight);
+        switchBoth = findViewById(R.id.switchBothFlashlight);
 
-        textBack = findViewById(R.id.textViewBackFlashlight);
-        textFront = findViewById(R.id.textViewFrontFlashlight);
-        textBoth = findViewById(R.id.textViewBothFlashlight);
-
-        // Check device flashlight
+        // Check device flashlight availability
         hasFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if (!hasFlash) {
             Toast.makeText(this, "No flashlight available", Toast.LENGTH_SHORT).show();
-            toggleBack.setEnabled(false);
-            toggleFront.setEnabled(false);
-            toggleBoth.setEnabled(false);
+            switchBack.setEnabled(false);
+            switchFront.setEnabled(false);
+            switchBoth.setEnabled(false);
             return;
         }
 
+        // Setup camera IDs
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             cameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
             try {
@@ -71,62 +65,54 @@ public class FlashlightActivity extends AppCompatActivity {
             }
         }
 
-        // 🔹 Back toggle
-        toggleBack.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                toggleFlash(backCameraId, isChecked);
-                textBack.setText(isChecked ? "Back ON" : "Back OFF");
-                if (isChecked) {
-                    toggleFront.setChecked(false);
-                    toggleBoth.setChecked(false);
-                }
-            }
-        });
+        setupSwitchListeners();
 
-        // 🔹 Front toggle
-        toggleFront.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                toggleFlash(frontCameraId, isChecked);
-                textFront.setText(isChecked ? "Front ON" : "Front OFF");
-                if (isChecked) {
-                    toggleBack.setChecked(false);
-                    toggleBoth.setChecked(false);
-                }
-            }
-        });
-
-        // 🔹 Both toggle
-        toggleBoth.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                toggleFlash(backCameraId, isChecked);
-                toggleFlash(frontCameraId, isChecked);
-                textBoth.setText(isChecked ? "Both ON" : "Both OFF");
-                if (isChecked) {
-                    toggleBack.setChecked(false);
-                    toggleFront.setChecked(false);
-                }
-            }
-        });
-
-        // Use BottomNavigationView
-        // Use BottomNavigationView
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
-        bottomNav.setOnItemSelectedListener((item) -> { // Corrected line
-            int id = item.getItemId();
-            if (id == R.id.action_back) {
-                // Proper back handling
-                getOnBackPressedDispatcher().onBackPressed();
-                return true;
-
-            }  else if (id == R.id.action_settings) {
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
-            }
-            return false;
+        // Image Button Back
+        ImageButton backBtn = findViewById(R.id.imageButtonBack);
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(FlashlightActivity.this, MainActivity.class);
+            startActivity(intent);
         });
     }
 
+    private void setupSwitchListeners() {
+        // Back switch
+        switchBack.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                toggleFlash(backCameraId, isChecked);
+
+                if (isChecked) { // Ensure mutual exclusivity
+                    switchFront.setChecked(false);
+                    switchBoth.setChecked(false);
+                }
+            }
+        });
+
+        // Front switch
+        switchFront.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                toggleFlash(frontCameraId, isChecked);
+
+                if (isChecked) {
+                    switchBack.setChecked(false);
+                    switchBoth.setChecked(false);
+                }
+            }
+        });
+
+        // Both switch
+        switchBoth.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                toggleFlash(backCameraId, isChecked);
+                toggleFlash(frontCameraId, isChecked);
+
+                if (isChecked) {
+                    switchBack.setChecked(false);
+                    switchFront.setChecked(false);
+                }
+            }
+        });
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void toggleFlash(String cameraId, boolean status) {
@@ -143,7 +129,7 @@ public class FlashlightActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Turn off all lights
+        // Turn off all lights when exiting activity
         try {
             if (backCameraId != null) cameraManager.setTorchMode(backCameraId, false);
             if (frontCameraId != null) cameraManager.setTorchMode(frontCameraId, false);

@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">TOOLS</string>
     <string name="utto_description">Smart Tools App</string>
-    <string name="settings">Settings</string>
-    <string name="enable_flashlight_auto_on">Enable Flashlight Auto-On</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="enable_bluetooth">Enable Bluetooth</string>
     <string name="tools_list">Tools Options</string>
     <string name="bluetooth">bluetooth</string>
     <string name="name_bt_option">Bluetooth</string>
@@ -24,4 +20,26 @@
     <string name="send_a_file">Send File</string>
     <string name="recorder">Recorder</string>
     <string name="saved_recordings">Saved Recordings:</string>
+    <string name="view_photo">View Photo</string>
+    <string name="camera_back">Camera Back</string>
+    <string name="delete">Delete</string>
+    <string name="share">Share</string>
+    <string name="my_camera">Camera</string>
+    <string name="back_arrow">Back</string>
+    <string name="upload_file">Upload File</string>
+    <string name="tts">Text to Speech</string>
+    <string name="type_your_text_here">Type your text here...</string>
+    <string name="speak">Speak</string>
+    <string name="speak_button">Speak</string>
+    <string name="pause">Pause</string>
+    <string name="clear">Clear</string>
+    <string name="list_of_recordings">List of Recordings</string>
+    <string name="play_recording">Play Recording</string>
+    <string name="my_recorder">My Recorder</string>
+    <string name="start_stop_recording">Start / Stop Recording</string>
+    <string name="recorder_controls">Recorder</string>
+    <string name="my_flashlight">My Flashlight</string>
+    <string name="back_flashlight">Back Flashlight</string>
+    <string name="front_flashlight">Front Flashlight</string>
+    <string name="both_flashlights">Both Flashlights</string>
 </resources>

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CalculatorActivity extends AppCompatActivity {
 
     private TextView tvDisplay;
-    private StringBuilder expression = new StringBuilder();
+    private final StringBuilder expression = new StringBuilder();
     private boolean lastResultShown = false; // flag to know if "=" was pressed
 
     @Override

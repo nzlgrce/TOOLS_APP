@@ -33,15 +33,14 @@ public class RecorderActivity extends AppCompatActivity {
     private static final String RECORDING_FILE_NAME = "Recording_";
 
     private ImageButton btnRecorder;
-    private TextView statusText;
     private ListView listViewRecordings;
 
-    private MediaRecorder mediaRecorder;
+    MediaRecorder mediaRecorder;
     private String outputFilePath;
-    private boolean isRecording = false;
-    private boolean isPaused = false;
+    boolean isRecording = false;
+    boolean isPaused = false;
 
-    private MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
 
     private RecordingAdapter adapter; // custom adapter
     private final ArrayList<String> recordingList = new ArrayList<>();
@@ -53,13 +52,13 @@ public class RecorderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recorder);
 
         btnRecorder = findViewById(R.id.btnRecorder);
-        statusText = findViewById(R.id.textViewRecorder);
+        TextView statusText = findViewById(R.id.textViewRecorder);
         listViewRecordings = findViewById(R.id.listViewRecordings);
 
         // Directory for recordings
-        recordingsDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_MUSIC), "MyRecordings");
+        recordingsDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC), "MyRecordings");
         if (!recordingsDir.exists()) recordingsDir.mkdirs();
+
 
         // Adapter for ListView
         adapter = new RecordingAdapter(this, recordingList, recordingsDir, this);
@@ -70,8 +69,9 @@ public class RecorderActivity extends AppCompatActivity {
         btnRecorder.setOnClickListener(v -> showRecorderDialog());
 
         // Back button
-        ImageButton backBtn = findViewById(R.id.imageRecorderBack);
+        ImageButton backBtn = findViewById(R.id.imageButtonBack);
         backBtn.setOnClickListener(v -> startActivity(new Intent(RecorderActivity.this, MainActivity.class)));
+
     }
 
     // ------------------ Options dialog ------------------
@@ -139,52 +139,64 @@ public class RecorderActivity extends AppCompatActivity {
     private void showRecorderDialog() {
         View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_recorder_controls, null);
 
-        Button btnStart = dialogView.findViewById(R.id.btnStart);
-        Button btnPause = dialogView.findViewById(R.id.btnPause);
-        Button btnSave = dialogView.findViewById(R.id.btnSave);
+        ImageButton btnStart = dialogView.findViewById(R.id.btnStart);
+        ImageButton btnPause = dialogView.findViewById(R.id.btnPause);
+        ImageButton btnSave = dialogView.findViewById(R.id.btnSave);
+        TextView statusView = dialogView.findViewById(R.id.textViewRecorderStatus);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(dialogView)
                 .setCancelable(true)
                 .create();
 
+        // Start / Stop Recording
         btnStart.setOnClickListener(v -> {
             if (!isRecording) {
                 if (checkPermissions()) {
                     startRecording();
                     isRecording = true;
-                    statusText.setText("Recording...");
+                    isPaused = false;
+                    statusView.setText("🎙 Recording...");
+                    statusView.setTextColor(getColor(android.R.color.holo_red_dark));
                 } else {
                     requestPermissions();
                 }
             } else {
                 stopRecording();
                 isRecording = false;
-                statusText.setText("Stopped");
+                isPaused = false;
+                statusView.setText("🟥 Stopped");
+                statusView.setTextColor(getColor(android.R.color.darker_gray));
+                loadSavedRecordings(); // Refresh the ListView
             }
         });
 
+        // Pause / Resume Recording
         btnPause.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isRecording) {
                 if (!isPaused) {
                     mediaRecorder.pause();
                     isPaused = true;
-                    statusText.setText("Paused");
+                    statusView.setText("⏸ Paused");
+                    statusView.setTextColor(getColor(android.R.color.holo_orange_dark));
                 } else {
                     mediaRecorder.resume();
                     isPaused = false;
-                    statusText.setText("Recording...");
+                    statusView.setText("🎙 Recording...");
+                    statusView.setTextColor(getColor(android.R.color.holo_red_dark));
                 }
             } else {
-                Toast.makeText(this, "Pause not supported", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Pause not supported on your device", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Save Recording (already stopped)
         btnSave.setOnClickListener(v -> {
             if (!isRecording && outputFilePath != null) {
                 File recordedFile = new File(outputFilePath);
                 addRecordingToMediaStore(recordedFile);
-                Toast.makeText(this, "Saved: " + recordedFile.getName(), Toast.LENGTH_SHORT).show();
+                statusView.setText("💾 Saved successfully");
+                statusView.setTextColor(getColor(android.R.color.holo_green_dark));
                 loadSavedRecordings();
             } else {
                 Toast.makeText(this, "Stop recording first", Toast.LENGTH_SHORT).show();
@@ -194,37 +206,69 @@ public class RecorderActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // ------------------ Start/Stop recording ------------------
+
     private void startRecording() {
         try {
-            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-            outputFilePath = recordingsDir.getAbsolutePath() + "/" + RECORDING_FILE_NAME + timestamp + ".m4a";
+            // Use public Music folder
+            recordingsDir = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_MUSIC), "MyRecordings");
+            if (!recordingsDir.exists()) recordingsDir.mkdirs();
 
+            // Generate timestamped filename
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            outputFilePath = new File(recordingsDir, RECORDING_FILE_NAME + timestamp + ".m4a").getAbsolutePath();
+
+            // Release any previous MediaRecorder
+            if (mediaRecorder != null) {
+                mediaRecorder.release();
+                mediaRecorder = null;
+            }
+
+            // Initialize MediaRecorder
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            mediaRecorder.setOutputFile(outputFilePath);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            mediaRecorder.setOutputFile(outputFilePath);
+
             mediaRecorder.prepare();
             mediaRecorder.start();
 
+            Toast.makeText(this, "Recording started...", Toast.LENGTH_SHORT).show();
+
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Permission denied for microphone", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Recording failed", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error preparing recorder: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Recording failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void stopRecording() {
+    // ------------------ Stop recording ------------------
+    void stopRecording() {
         if (mediaRecorder != null) {
             try {
                 mediaRecorder.stop();
                 mediaRecorder.release();
                 mediaRecorder = null;
+
+                // Add recording to MediaStore so it's visible in File Manager
+                File recordedFile = new File(outputFilePath);
+                addRecordingToMediaStore(recordedFile);
+
+                Toast.makeText(this, "Recording saved to Music/MyRecordings", Toast.LENGTH_SHORT).show();
+
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(this, "Stop recording failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
     // ------------------ Load recordings ------------------
     public void loadSavedRecordings() {

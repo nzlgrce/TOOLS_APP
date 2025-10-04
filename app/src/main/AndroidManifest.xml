@@ -54,11 +54,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".SettingsActivity"
-            android:exported="true" />
-
         <activity android:name=".BluetoothActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -80,7 +78,8 @@
             android:exported="true" />
 
         <activity android:name=".TextToSpeechActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity android:name=".SpeechToTextActivity"
             android:exported="true" />

@@ -49,6 +49,13 @@ public class SpeechToTextActivity extends AppCompatActivity {
 
         // Button click to start Speech Recognition
         btnButtonSpeechtoText.setOnClickListener(v -> startSpeechToText());
+
+        // Image Button Back
+        ImageButton backBtn = findViewById(R.id.imageButtonBack);
+        backBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(SpeechToTextActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void startSpeechToText() {

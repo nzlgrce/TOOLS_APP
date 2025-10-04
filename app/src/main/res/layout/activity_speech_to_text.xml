@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     android:background="#FAEBEF">
 
-    <!-- Speech to Text Button -->
-
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="189dp"
         android:layout_height="45dp"
         android:text="Speech to Text"
@@ -20,14 +19,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052" />
-
-    <!-- Recognized Speech Output -->
+        app:layout_constraintVertical_bias="0.071" />
 
     <ImageButton
         android:id="@+id/btnButtonSpeechtoText"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginTop="38dp"
         android:background="@android:color/transparent"
         android:contentDescription="Speech to Text"
         android:padding="8dp"
@@ -37,14 +35,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textViewSpeechText"
         android:layout_width="338dp"
         android:layout_height="429dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:padding="8dp"
         android:text="Your speech will appear here"
         android:textColor="@color/black"
@@ -53,5 +51,21 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnButtonSpeechtoText" />
+
+    <ImageButton
+        android:id="@+id/imageButtonBack"
+        android:layout_width="59dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="32dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/back_button"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/black" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

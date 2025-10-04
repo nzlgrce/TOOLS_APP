@@ -38,9 +38,11 @@ public class RecordingAdapter extends ArrayAdapter<String> {
         String fileName = recordings.get(position);
         TextView txtFileName = convertView.findViewById(R.id.txtFileName);
         ImageButton btnPlay = convertView.findViewById(R.id.btnPlay);
+        ImageButton btnStop = convertView.findViewById(R.id.btnStop);
 
         txtFileName.setText(fileName);
 
+        // Play button
         btnPlay.setOnClickListener(v -> {
             File fileToPlay = new File(recordingsDir, fileName);
             if (fileToPlay.exists()) {
@@ -50,7 +52,24 @@ public class RecordingAdapter extends ArrayAdapter<String> {
             }
         });
 
-        // Optional: clicking the filename still shows rename/delete options
+        // Stop button
+        btnStop.setOnClickListener(v -> {
+            if (activity.mediaPlayer != null && activity.mediaPlayer.isPlaying()) {
+                activity.mediaPlayer.stop();
+                activity.mediaPlayer.release();
+                activity.mediaPlayer = null;
+                Toast.makeText(context, "Playback stopped", Toast.LENGTH_SHORT).show();
+            }
+
+            if (activity.mediaRecorder != null && activity.isRecording) {
+                activity.stopRecording();
+                activity.isRecording = false;
+                activity.isPaused = false;
+                Toast.makeText(context, "Recording stopped", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Clicking the filename shows options
         txtFileName.setOnClickListener(v -> {
             File fileClicked = new File(recordingsDir, fileName);
             activity.showOptionsDialog(fileName, fileClicked);
