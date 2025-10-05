@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -116,7 +118,9 @@ public class BluetoothActivity extends AppCompatActivity {
             } else {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
                         != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        requestPermissions();
+                    }
                     return;
                 }
                 bluetoothAdapter.disable();
@@ -178,7 +182,9 @@ public class BluetoothActivity extends AppCompatActivity {
         deviceName.setOnEditorActionListener((v, actionId, event) -> {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
                     != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    requestPermissions();
+                }
                 return false;
             }
             bluetoothAdapter.setName(deviceName.getText().toString());
@@ -217,7 +223,9 @@ public class BluetoothActivity extends AppCompatActivity {
         pairedAdapter.clear();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestPermissions();
+            }
             return;
         }
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
@@ -348,7 +356,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestPermissions();
+            }
             return;
         }
 
@@ -366,10 +376,13 @@ public class BluetoothActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN)
                         != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                requestPermissions();
+            }
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.S)
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this,
                 new String[]{
