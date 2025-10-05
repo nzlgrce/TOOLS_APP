@@ -87,10 +87,8 @@
         <activity android:name=".TimerActivity"
             android:exported="true" />
 
-        <activity android:name=".AlarmActivity"
+        <activity android:name=".StopwatchActivity"
             android:exported="true" />
-
-        <receiver android:name=".AlarmReceiver" />
 
         <activity android:name=".CalculatorActivity"
             android:exported="true" />

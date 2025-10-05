@@ -169,8 +169,7 @@ public class TextToSpeechActivity extends AppCompatActivity {
         // Image Button Back
         ImageButton backBtn = findViewById(R.id.imageButtonBack);
         backBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(TextToSpeechActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
     }
 

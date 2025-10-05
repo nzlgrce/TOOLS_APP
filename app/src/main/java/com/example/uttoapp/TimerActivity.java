@@ -2,6 +2,7 @@ package com.example.uttoapp;
 
 import android.animation.ObjectAnimator;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -22,8 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class TimerActivity extends AppCompatActivity {
 
     private TextView textViewTimer;
-    private ImageButton imageButtonTimer;
-    private Button btnResetTimer, btnPickTime;
+    private ImageButton imageButtonTimer, btnResetTimer, btnCancelTimer;
+    private Button btnPickTime;
 
     private CountDownTimer countDownTimer;
     private long selectedTimeMillis = 0; // total picked time
@@ -44,6 +45,7 @@ public class TimerActivity extends AppCompatActivity {
         textViewTimer = findViewById(R.id.textViewTimer);
         imageButtonTimer = findViewById(R.id.imageButtonTimer);
         btnResetTimer = findViewById(R.id.btnResetTimer);
+        btnCancelTimer = findViewById(R.id.btnCancelTimer);
         btnPickTime = findViewById(R.id.btnPickTime);
         progressCircle = findViewById(R.id.progressCircle);
 
@@ -53,12 +55,15 @@ public class TimerActivity extends AppCompatActivity {
 
         btnResetTimer.setEnabled(false);
         imageButtonTimer.setEnabled(false);
+        btnCancelTimer.setEnabled(false);
 
         btnResetTimer.setOnClickListener(v -> {
             if (selectedTimeMillis > 0) {
                 resetTimer();
             }
         });
+
+        btnCancelTimer.setOnClickListener(v -> cancelTimer());
 
         // Start / Pause button
         imageButtonTimer.setOnClickListener(v -> {
@@ -77,6 +82,12 @@ public class TimerActivity extends AppCompatActivity {
 
         // Pick time button
         btnPickTime.setOnClickListener(v -> openCustomTimePicker());
+
+        // Image Button Back
+        ImageButton backBtn = findViewById(R.id.imageButtonBack);
+        backBtn.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     private void openCustomTimePicker() {
@@ -132,7 +143,9 @@ public class TimerActivity extends AppCompatActivity {
                         progressCircle.setProgress(1000);
 
                         btnResetTimer.setEnabled(true);
+                        btnCancelTimer.setEnabled(true);
                         imageButtonTimer.setEnabled(true);
+
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -140,8 +153,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startTimer(long startTimeMillis) {
-        // startTimeMillis is the duration we should run now (either selectedTimeMillis or remaining)
-        // Use timeLeftMillis to keep sync
+
         isRunning = true;
 
         // Cancel any previous animator
@@ -237,6 +249,33 @@ public class TimerActivity extends AppCompatActivity {
         imageButtonTimer.setImageResource(R.drawable.timer_app);
         stopAlarm();
         Toast.makeText(this, "Timer reset", Toast.LENGTH_SHORT).show();
+    }
+
+    private void cancelTimer() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+        if (progressAnimator != null) {
+            progressAnimator.cancel();
+            progressAnimator = null;
+        }
+
+        isRunning = false;
+        timeLeftMillis = 0;
+        selectedTimeMillis = 0;
+        totalDurationMillis = 0;
+
+        textViewTimer.setText("00:00");
+        progressCircle.setProgress(0);
+        imageButtonTimer.setImageResource(R.drawable.timer_app);
+        stopAlarm();
+
+        btnResetTimer.setEnabled(false);
+        imageButtonTimer.setEnabled(false);
+        btnCancelTimer.setEnabled(false);
+
+        Toast.makeText(this, "Timer canceled", Toast.LENGTH_SHORT).show();
     }
 
     private String formatTime(long totalSeconds) {

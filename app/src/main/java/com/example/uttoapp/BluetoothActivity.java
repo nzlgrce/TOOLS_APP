@@ -36,6 +36,7 @@ public class BluetoothActivity extends AppCompatActivity {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch bluetoothSwitch;
     EditText deviceName;
+    Button sendFileBtn;
     ListView pairedList, availableList;
     ArrayAdapter<String> pairedAdapter, availableAdapter;
 
@@ -56,6 +57,7 @@ public class BluetoothActivity extends AppCompatActivity {
         bluetoothSwitch = findViewById(R.id.bluetoothSwitch);
         deviceName = findViewById(R.id.deviceName);
         pairedList = findViewById(R.id.pairedList);
+        sendFileBtn = findViewById(R.id.buttonSendFile);
         availableList = findViewById(R.id.availableList);
 
         pairedAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -99,9 +101,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
         // Request permissions at start
         checkPermissions();
-
         // Switch for Bluetooth On/Off
         bluetoothSwitch.setChecked(bluetoothAdapter.isEnabled());
+        updateBluetoothUI();
         bluetoothSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 if (!bluetoothAdapter.isEnabled()) {
@@ -110,6 +112,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 } else {
                     loadPairedDevices();
                 }
+
             } else {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -120,6 +123,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 pairedAdapter.clear();
                 Toast.makeText(this, "Bluetooth turned off", Toast.LENGTH_SHORT).show();
             }
+            updateBluetoothUI();
         });
 
         ImageButton discoverBtn = findViewById(R.id.imageButtonDiscover);
@@ -136,7 +140,7 @@ public class BluetoothActivity extends AppCompatActivity {
         sendFileBtn.setOnClickListener(v -> openFileChooser());
 
         loadPairedDevices();
-        
+
         pairedList.setOnItemLongClickListener((parent, view, position, id) -> {
             String item = pairedAdapter.getItem(position);
             if (item == null || !item.contains(" - ")) {
@@ -192,6 +196,10 @@ public class BluetoothActivity extends AppCompatActivity {
         // Register bond state change receiver
         IntentFilter bondFilter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(bondReceiver, bondFilter);
+
+        IntentFilter statefilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(bluetoothStateReceiver, statefilter);
+
 
     }
 
@@ -280,6 +288,36 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     };
 
+    private final BroadcastReceiver bluetoothStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+                int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+                if (state == BluetoothAdapter.STATE_ON) {
+                    updateBluetoothUI();
+                } else if (state == BluetoothAdapter.STATE_OFF) {
+                    updateBluetoothUI();
+                }
+            }
+        }
+    };
+
+
+    private void updateBluetoothUI() {
+        boolean isBtOn = bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+        deviceName.setEnabled(isBtOn);
+        sendFileBtn.setEnabled(isBtOn);
+
+        if (isBtOn) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
+                    == PackageManager.PERMISSION_GRANTED) {
+                deviceName.setText(bluetoothAdapter.getName());
+            }
+        } else {
+            deviceName.setText(""); // or leave previous name
+        }
+    }
 
     private boolean pairDevice(BluetoothDevice device) {
         try {
@@ -378,6 +416,7 @@ public class BluetoothActivity extends AppCompatActivity {
                 bluetoothSwitch.setChecked(false);
                 Toast.makeText(this, "Bluetooth enabling canceled", Toast.LENGTH_SHORT).show();
             }
+            updateBluetoothUI();
         }
 
         if (requestCode == PICK_FILE_REQUEST && resultCode == RESULT_OK && data != null) {
@@ -416,6 +455,8 @@ public class BluetoothActivity extends AppCompatActivity {
         }
         unregisterReceiver(discoveryReceiver);
         unregisterReceiver(bondReceiver);
+        unregisterReceiver(bluetoothStateReceiver);
+
     }
 
 }

@@ -59,8 +59,7 @@ public class CameraActivity extends AppCompatActivity {
 
         ImageButton backBtn = findViewById(R.id.imageButtonBack);
         backBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(CameraActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
 
         shareBtn = findViewById(R.id.imageButtonShare);

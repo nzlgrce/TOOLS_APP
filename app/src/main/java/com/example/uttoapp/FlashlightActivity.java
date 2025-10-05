@@ -1,8 +1,10 @@
 package com.example.uttoapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
@@ -10,11 +12,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 
 public class FlashlightActivity extends AppCompatActivity {
 
@@ -22,6 +26,9 @@ public class FlashlightActivity extends AppCompatActivity {
     private CameraManager cameraManager;
     private String backCameraId, frontCameraId;
     private boolean hasFlash;
+
+    private TextView textBackFlashlight, textFrontFlashlight, textBothFlashlight;
+    private CardView cardBackFlashlight, cardFrontFlashlight, cardBothFlashlight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,14 @@ public class FlashlightActivity extends AppCompatActivity {
         switchBack = findViewById(R.id.switchBackFlashlight);
         switchFront = findViewById(R.id.switchFrontFlashlight);
         switchBoth = findViewById(R.id.switchBothFlashlight);
+
+        textBackFlashlight = findViewById(R.id.textBackFlashlight);
+        textFrontFlashlight = findViewById(R.id.textFrontFlashlight);
+        textBothFlashlight = findViewById(R.id.textBothFlashlight);
+
+        cardBackFlashlight = findViewById(R.id.cardBackFlashlight);
+        cardFrontFlashlight = findViewById(R.id.cardFrontFlashlight);
+        cardBothFlashlight = findViewById(R.id.cardBothFlashlight);
 
         // Check device flashlight availability
         hasFlash = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
@@ -70,49 +85,59 @@ public class FlashlightActivity extends AppCompatActivity {
         // Image Button Back
         ImageButton backBtn = findViewById(R.id.imageButtonBack);
         backBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(FlashlightActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
+
+
     }
 
+    @SuppressLint("SetTextI18n")
     private void setupSwitchListeners() {
-        // Back switch
         switchBack.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 toggleFlash(backCameraId, isChecked);
-
-                if (isChecked) { // Ensure mutual exclusivity
+                if (isChecked) {
                     switchFront.setChecked(false);
                     switchBoth.setChecked(false);
                 }
             }
+
+            // UI color and text update
+            textBackFlashlight.setText(isChecked ? "Back Flashlight - ON" : "Back Flashlight");
+            textBackFlashlight.setTextColor(Color.parseColor(isChecked ? "#1B5E20" : "#333F79"));
+            cardBackFlashlight.setCardBackgroundColor(Color.parseColor(isChecked ? "#C8E6C9" : "#FFFFFF"));
         });
 
-        // Front switch
         switchFront.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 toggleFlash(frontCameraId, isChecked);
-
                 if (isChecked) {
                     switchBack.setChecked(false);
                     switchBoth.setChecked(false);
                 }
             }
+
+            textFrontFlashlight.setText(isChecked ? "Front Flashlight - ON" : "Front Flashlight");
+            textFrontFlashlight.setTextColor(Color.parseColor(isChecked ? "#1B5E20" : "#333F79"));
+            cardFrontFlashlight.setCardBackgroundColor(Color.parseColor(isChecked ? "#C8E6C9" : "#FFFFFF"));
         });
 
-        // Both switch
         switchBoth.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 toggleFlash(backCameraId, isChecked);
                 toggleFlash(frontCameraId, isChecked);
-
                 if (isChecked) {
                     switchBack.setChecked(false);
                     switchFront.setChecked(false);
                 }
             }
+
+            textBothFlashlight.setText(isChecked ? "Both Flashlights - ON" : "Both Flashlights");
+            textBothFlashlight.setTextColor(Color.parseColor(isChecked ? "#1B5E20" : "#333F79"));
+            cardBothFlashlight.setCardBackgroundColor(Color.parseColor(isChecked ? "#C8E6C9" : "#FFFFFF"));
         });
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void toggleFlash(String cameraId, boolean status) {
@@ -125,7 +150,6 @@ public class FlashlightActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onDestroy() {
         super.onDestroy();

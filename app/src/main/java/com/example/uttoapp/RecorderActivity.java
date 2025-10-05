@@ -69,8 +69,10 @@ public class RecorderActivity extends AppCompatActivity {
         btnRecorder.setOnClickListener(v -> showRecorderDialog());
 
         // Back button
-        ImageButton backBtn = findViewById(R.id.imageButtonBack);
-        backBtn.setOnClickListener(v -> startActivity(new Intent(RecorderActivity.this, MainActivity.class)));
+        ImageButton imageButtonBack = findViewById(R.id.imageButtonBack);
+        imageButtonBack.setOnClickListener(v -> {
+            finish();
+        });
 
     }
 

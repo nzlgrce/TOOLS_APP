@@ -1,27 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#C3BEC0"
+    android:background="#FAEBEF"
     android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="173dp"
-        android:layout_height="36dp"
-        android:text="@string/my_camera"
-        android:textAlignment="center"
-        android:textColor="#333D79"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!-- Top bar container -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="319dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/imageButtonBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.538"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/textViewCamera"
+            android:layout_width="116dp"
+            android:layout_height="40dp"
+            android:text="@string/my_camera"
+            android:textAlignment="center"
+            android:textColor="#333D79"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imageButtonBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.354"
+            app:layout_constraintStart_toEndOf="@id/imageButtonBack"
+            app:layout_constraintTop_toTopOf="@id/imageButtonBack"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/photoView"
@@ -86,21 +111,6 @@
         app:srcCompat="@android:drawable/ic_menu_delete"
         app:tint="@color/black" />
 
-    <ImageButton
-        android:id="@+id/imageButtonBack"
-        android:layout_width="47dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="59dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/back_button"
-        android:src="@drawable/baseline_arrow_back_24"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/textViewPhotos"
@@ -113,7 +123,7 @@
         app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.133" />
+        app:layout_constraintVertical_bias="0.128" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.uttoapp;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -69,6 +70,11 @@ public class CalculatorActivity extends AppCompatActivity {
                 expression.setLength(0);
                 lastResultShown = false;
             }
+        });
+
+        ImageButton imageButtonBack = findViewById(R.id.imageButtonBack);
+        imageButtonBack.setOnClickListener(v -> {
+            finish();
         });
     }
 

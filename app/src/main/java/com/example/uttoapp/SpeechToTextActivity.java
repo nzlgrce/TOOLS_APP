@@ -18,7 +18,6 @@ import java.util.Locale;
 
 public class SpeechToTextActivity extends AppCompatActivity {
 
-    private ImageButton btnButtonSpeechtoText;
     private TextView textViewSpeechText;
 
     private ActivityResultLauncher<Intent> speechToTextLauncher;
@@ -28,7 +27,7 @@ public class SpeechToTextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_to_text);
 
-        btnButtonSpeechtoText = findViewById(R.id.btnButtonSpeechtoText);
+        ImageButton btnButtonSpeechtoText = findViewById(R.id.btnButtonSpeechtoText);
         textViewSpeechText = findViewById(R.id.textViewSpeechText);
 
         // Register ActivityResultLauncher for speech recognition
@@ -53,8 +52,7 @@ public class SpeechToTextActivity extends AppCompatActivity {
         // Image Button Back
         ImageButton backBtn = findViewById(R.id.imageButtonBack);
         backBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(SpeechToTextActivity.this, MainActivity.class);
-            startActivity(intent);
+            finish();
         });
     }
 
