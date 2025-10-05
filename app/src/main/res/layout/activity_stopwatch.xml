@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0C8B0"
-    tools:context=".StopwatchActivity">
+    android:background="#FAEBEF">
 
 
     <TextView
@@ -43,7 +42,7 @@
         android:id="@+id/textViewTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="48dp"
         android:text="@string/time_list"
         android:textColor="#1C1C1C"
         android:textSize="40sp"
@@ -54,13 +53,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewLaps"
-        android:layout_width="327dp"
-        android:layout_height="388dp"
+        android:layout_width="318dp"
+        android:layout_height="341dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="156dp"
+        android:layout_marginBottom="168dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_lap" />
 

@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="20dp"
+    android:background="@color/white"
     android:gravity="center_horizontal">
 
     <LinearLayout
@@ -43,7 +44,7 @@
         android:gravity="end|center_vertical"
         android:layout_marginTop="30dp"
         android:padding="12dp"
-        android:text="0"
+        android:text="@string/zero_display"
         android:textSize="32sp" />
 
     <GridLayout
@@ -58,85 +59,85 @@
         <Button
             android:id="@+id/btnClear"
             style="@style/CalcButton"
-            android:text="C" />
+            android:text="@string/clear_all" />
 
         <Button
             android:id="@+id/btnDivide"
             style="@style/CalcButton"
-            android:text="/" />
+            android:text="@string/slash" />
 
         <Button
             android:id="@+id/btnMultiply"
             style="@style/CalcButton"
-            android:text="*" />
+            android:text="@string/times" />
 
         <Button
             android:id="@+id/btnDelete"
             style="@style/CalcButton"
-            android:text="⌫" />
+            android:text="@string/backdelete" />
 
         <!-- Row 2 -->
         <Button
             android:id="@+id/btn7"
             style="@style/CalcButton"
-            android:text="7" />
+            android:text="@string/seven" />
 
         <Button
             android:id="@+id/btn8"
             style="@style/CalcButton"
-            android:text="8" />
+            android:text="@string/eight" />
 
         <Button
             android:id="@+id/btn9"
             style="@style/CalcButton"
-            android:text="9" />
+            android:text="@string/nine" />
 
         <Button
             android:id="@+id/btnMinus"
             style="@style/CalcButton"
-            android:text="-" />
+            android:text="@string/minus" />
 
         <!-- Row 3 -->
         <Button
             android:id="@+id/btn4"
             style="@style/CalcButton"
-            android:text="4" />
+            android:text="@string/four" />
 
         <Button
             android:id="@+id/btn5"
             style="@style/CalcButton"
-            android:text="5" />
+            android:text="@string/five" />
 
         <Button
             android:id="@+id/btn6"
             style="@style/CalcButton"
-            android:text="6" />
+            android:text="@string/six" />
 
         <Button
             android:id="@+id/btnPlus"
             style="@style/CalcButton"
-            android:text="+" />
+            android:text="@string/plus" />
 
         <!-- Row 4 -->
         <Button
             android:id="@+id/btn1"
             style="@style/CalcButton"
-            android:text="1" />
+            android:text="@string/one" />
 
         <Button
             android:id="@+id/btn2"
             style="@style/CalcButton"
-            android:text="2" />
+            android:text="@string/two" />
 
         <Button
             android:id="@+id/btn3"
             style="@style/CalcButton"
-            android:text="3" />
+            android:text="@string/three" />
 
         <Button
             android:id="@+id/btnEquals"
             style="@style/CalcButton"
-            android:text="=" />
+            android:text="@string/equal" />
 
         <!-- Row 5 -->
         <Button
@@ -145,7 +146,7 @@
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_columnSpan="2"
-            android:text="0" />
+            android:text="@string/zero" />
 
         <Button
             android:id="@+id/btnDot"
@@ -153,7 +154,7 @@
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_columnSpan="2"
-            android:text="." />
+            android:text="@string/dot" />
 
     </GridLayout>
 
