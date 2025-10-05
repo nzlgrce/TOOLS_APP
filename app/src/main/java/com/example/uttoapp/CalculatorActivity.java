@@ -116,7 +116,8 @@ public class CalculatorActivity extends AppCompatActivity {
     // Grammar-based parsing
     private double parseExpression(String exp) {
         return new Object() {
-            int pos = -1, ch;
+            int pos = -1;
+            int ch;
 
             void nextChar() {
                 ch = (++pos < exp.length()) ? exp.charAt(pos) : -1;
